@@ -12,6 +12,7 @@ builder.Services.AddSwaggerGen();
 
 // Register our PDF Service
 builder.Services.AddScoped<IPdfService, PdfPigService>();
+builder.Services.AddScoped<DocAnalyst.Core.Interfaces.IAiService, DocAnalyst.Infrastructure.Services.OllamaService>();
 
 var app = builder.Build();
 

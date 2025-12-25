@@ -1,17 +1,26 @@
+using DocAnalyst.Core.Interfaces;
+using DocAnalyst.Infrastructure.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+// 1. Add services to the container.
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+
+// --- USE THIS FOR THE BLUE PAGE (Classic Swagger) ---
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+// Register our PDF Service
+builder.Services.AddScoped<IPdfService, PdfPigService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// 2. Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    // This turns on the blue page
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();

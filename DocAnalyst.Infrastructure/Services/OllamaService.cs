@@ -37,7 +37,13 @@ public class OllamaService : IAiService
     public async Task<string> AnalyzeDocumentAsync(string documentText, string userQuestion)
     {
         var history = new ChatHistory();
-        history.AddSystemMessage("You are a helpful assistant. Answer based ONLY on the provided context.");
+        history.AddSystemMessage(@"You are a document analysis assistant. Follow these rules strictly:
+1. Answer ONLY using information from the provided CONTEXT
+2. If the answer is not in the CONTEXT, respond with: 'I cannot answer that based on the provided documents. Please ask questions related to the uploaded PDFs.'
+3. Do NOT use your general knowledge
+4. Do NOT answer personal questions like 'how are you'
+5. Always cite which part of the context you used");
+
         history.AddUserMessage($"CONTEXT: {documentText}\n\nQUESTION: {userQuestion}");
 
         var result = await _chatService.GetChatMessageContentAsync(history);

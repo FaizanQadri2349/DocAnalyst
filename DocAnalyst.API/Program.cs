@@ -14,6 +14,22 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IPdfService, PdfPigService>();
 builder.Services.AddScoped<DocAnalyst.Core.Interfaces.IAiService, DocAnalyst.Infrastructure.Services.OllamaService>();
 
+// Register Qdrant Vector DB Service
+var qdrantHost = builder.Configuration["Qdrant:Host"] ?? "localhost";
+var qdrantPort = int.Parse(builder.Configuration["Qdrant:Port"] ?? "6334");
+builder.Services.AddSingleton<IVectorDbService>(sp => new QdrantService(qdrantHost, qdrantPort));
+
+// Add CORS for frontend
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
 // 2. Configure the HTTP request pipeline.
@@ -23,6 +39,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
 

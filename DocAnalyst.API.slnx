@@ -1,3 +1,5 @@
 <Solution>
   <Project Path="DocAnalyst.API/DocAnalyst.API.csproj" />
+  <Project Path="DocAnalyst.Core/DocAnalyst.Core.csproj" Id="b0b91cda-f165-45e5-bf50-f95c6ca38e84" />
+  <Project Path="DocAnalyst.Infrastructure/DocAnalyst.Infrastructure.csproj" Id="66cec7d3-f189-43ef-9e44-07da4be4e0d6" />
 </Solution>

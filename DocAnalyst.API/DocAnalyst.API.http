@@ -1,0 +1,6 @@
+@DocAnalyst.API_HostAddress = http://localhost:5014
+
+GET {{DocAnalyst.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
